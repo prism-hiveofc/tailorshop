@@ -1,0 +1,1 @@
+{"version":3,"file":"get-recent-orders.action.js","sourceRoot":"","sources":["../../../../src/modules/dashboard/actions/get-recent-orders.action.ts"],"names":[],"mappings":";;;AAAA,uFACgD;AAGzC,MAAM,qBAAqB,GAAG,KAAK,IAAE,EAAE;IAE7C,MAAM,MAAM,GACZ,MAAM,IAAA,0CAAe,GAAE,CAAC;IAGxB,OAAO,MAAM,CAAC;AAEf,CAAC,CAAC;AARW,QAAA,qBAAqB,yBAQhC"}
