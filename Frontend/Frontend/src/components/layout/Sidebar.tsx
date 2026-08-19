@@ -56,9 +56,11 @@ const Sidebar = ({ mobileOpen, onMobileClose }: SidebarProps) => {
   const handleLogout = async () => {
     try {
       await logoutUser();
-      navigate("/login", { replace: true });
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      onMobileClose();
+      navigate("/login", { replace: true });
     }
   };
 
