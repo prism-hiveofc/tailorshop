@@ -60,12 +60,12 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: yupResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  resolver: yupResolver(loginSchema),
+  defaultValues: {
+    email: "",
+    password: "",
+  },
+});
 
   const onSubmit = async (data: LoginFormData) => {
     try {

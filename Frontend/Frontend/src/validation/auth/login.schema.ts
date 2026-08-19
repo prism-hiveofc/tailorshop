@@ -10,3 +10,5 @@ export const loginSchema = yup.object({
     .string()
     .required("Password is required"),
 });
+
+export type LoginFormData = yup.InferType<typeof loginSchema>;

@@ -31,9 +31,11 @@ import { getOrders } from "../../services/order.service";
 import { createPayment } from "../../services/payment.service";
 
 import type { Order } from "../../types/order";
-import type { CreatePaymentFormData } from "../../types/payment";
 
-import { createPaymentSchema } from "../../validation/auth/payment/create-payment.schema";
+import {
+  createPaymentSchema,
+  type CreatePaymentFormData,
+} from "../../validation/auth/payment/create-payment.schema";
 
 import AppSnackbar from "../../components/common/AppSnackbar";
 
@@ -94,17 +96,15 @@ const AddPayment = () => {
       errors,
       isSubmitting,
     },
-  } = useForm<CreatePaymentFormData>({
-    resolver: yupResolver(
-      createPaymentSchema
-    ),
-    defaultValues: {
-      orderId: "",
-      amount: 0,
-      paymentMethod: "CASH",
-      remarks: "",
-    },
-  });
+  } =useForm<CreatePaymentFormData>({
+  resolver: yupResolver(createPaymentSchema),
+  defaultValues: {
+    orderId: "",
+    amount: 0,
+    paymentMethod: "CASH",
+    remarks: "",
+  },
+});
 
   useEffect(() => {
     const loadOrders = async () => {

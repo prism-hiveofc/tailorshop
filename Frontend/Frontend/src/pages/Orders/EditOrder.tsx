@@ -38,11 +38,12 @@ import { getCustomers } from "../../services/customer.service";
 import { getOrder, updateOrder } from "../../services/order.service";
 
 import type { Customer } from "../../types/customer";
-import type {
-  CreateOrderFormData,
-  OrderStatus,
-} from "../../types/order";
-import { createOrderSchema } from "../../validation/auth/order/create-order.schema";
+import type { OrderStatus } from "../../types/order";
+
+import {
+  createOrderSchema,
+  type CreateOrderFormData,
+} from "../../validation/auth/order/create-order.schema";
 
 // =========================
 // DESIGN TOKENS

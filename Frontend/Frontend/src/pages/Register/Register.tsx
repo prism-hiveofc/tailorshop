@@ -57,20 +57,20 @@ const Register = () => {
       | "info",
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<RegisterFormData>({
-    resolver: yupResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+ const {
+  register,
+  handleSubmit,
+  formState: { errors, isSubmitting },
+} = useForm<RegisterFormData>({
+  resolver: yupResolver(registerSchema),
+  defaultValues: {
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  },
+});
 
   const onSubmit = async (data: RegisterFormData) => {
     try {

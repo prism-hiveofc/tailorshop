@@ -34,11 +34,12 @@ import {
   updatePayment,
 } from "../../services/payment.service";
 
-import type {
-  CreatePaymentFormData,
-  Payment,
-} from "../../types/payment";
-import { updatePaymentSchema } from "../../validation/auth/payment/update-payment.schema";
+import type { Payment } from "../../types/payment";
+
+import {
+  updatePaymentSchema,
+  type UpdatePaymentFormData,
+} from "../../validation/auth/payment/update-payment.schema";
 
 // =========================
 // DESIGN TOKENS
@@ -112,14 +113,14 @@ const EditPayment = () => {
     reset,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<Omit<CreatePaymentFormData, "orderId">>({
-    resolver: yupResolver(updatePaymentSchema),
-    defaultValues: {
-      amount: 0,
-      paymentMethod: "CASH",
-      remarks: "",
-    },
-  });
+  } = useForm<UpdatePaymentFormData>({
+  resolver: yupResolver(updatePaymentSchema),
+  defaultValues: {
+    amount: 0,
+    paymentMethod: "CASH",
+    remarks: "",
+  },
+});
 
   useEffect(() => {
     const loadPayment = async () => {
@@ -148,7 +149,7 @@ const EditPayment = () => {
     loadPayment();
   }, [id, reset]);
 
-  const onSubmit = async (data: Omit<CreatePaymentFormData, "orderId">) => {
+ const onSubmit = async (data: UpdatePaymentFormData) => {
     if (!id || !payment) return;
 
     try {

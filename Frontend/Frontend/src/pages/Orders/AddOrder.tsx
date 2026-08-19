@@ -39,9 +39,7 @@ import type {
   Customer,
 } from "../../types/customer";
 
-import type {
-  CreateOrderFormData,
-} from "../../types/order";
+import type { CreateOrderFormData } from "../../validation/auth/order/create-order.schema";
 import { createOrderSchema } from "../../validation/auth/order/create-order.schema";
 
 // =========================

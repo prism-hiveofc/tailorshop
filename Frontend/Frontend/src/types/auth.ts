@@ -1,12 +1,2 @@
-export interface RegisterFormData {
-  name: string;
-  email: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-}
-
-export interface LoginFormData {
-  email: string;
-  password: string;
-}
+export type { RegisterFormData } from "../validation/auth/register.schema";
+export type { LoginFormData } from "../validation/auth/login.schema"

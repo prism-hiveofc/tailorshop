@@ -22,13 +22,3 @@ export interface Order {
   remarks?: string;
   status: OrderStatus;
 }
-
-export interface CreateOrderFormData {
-  customerId: string;
-  deliveryDate: string;
-  dressType: string;
-  quantity: number;
-  totalAmount: number;
-  advanceAmount: number;
-  remarks: string;
-}

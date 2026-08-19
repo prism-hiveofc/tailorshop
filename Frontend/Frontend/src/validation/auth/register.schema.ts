@@ -1,11 +1,9 @@
 import * as yup from "yup";
 
 export const registerSchema = yup.object({
-
   name: yup
     .string()
-    .required("Username is required")
-    .min(3, "Minimum 3 characters"),
+    .required("Name is required"),
 
   email: yup
     .string()
@@ -14,23 +12,20 @@ export const registerSchema = yup.object({
 
   phone: yup
     .string()
-    .required("Phone number is required")
-    .matches(
-      /^[0-9]{10}$/,
-      "Phone number must be 10 digits"
-    ),
+    .required("Phone number is required"),
 
   password: yup
     .string()
-    .required("Password is required")
-    .min(6, "Minimum 6 characters"),
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 
   confirmPassword: yup
     .string()
     .oneOf(
       [yup.ref("password")],
-      "Passwords do not match"
+      "Passwords must match"
     )
     .required("Confirm password is required"),
-
 });
+
+export type RegisterFormData = yup.InferType<typeof registerSchema>;
