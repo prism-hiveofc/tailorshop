@@ -1,8 +1,7 @@
+import { useState } from "react";
 import {
   Box,
   Toolbar,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 
 import { Outlet } from "react-router-dom";
@@ -11,17 +10,21 @@ import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 
 const MainLayout = () => {
-  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isMobile = useMediaQuery(
-    theme.breakpoints.down("md")
-  );
+  const handleMenuClick = () => {
+    setMobileOpen((prev) => !prev);
+  };
+
+  const handleMobileClose = () => {
+    setMobileOpen(false);
+  };
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <Header />
+      <Header onMenuClick={handleMenuClick} />
 
-      {!isMobile && <Sidebar />}
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleMobileClose} />
 
       <Box
         component="main"
@@ -51,7 +54,7 @@ const MainLayout = () => {
           <Outlet />
         </Box>
       </Box>
-    </Box>  
+    </Box>
   );
 };
 

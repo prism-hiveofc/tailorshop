@@ -31,7 +31,11 @@ const TEXT_PRIMARY = "#1C1B29";
 const TEXT_SECONDARY = "#8A8896";
 const BORDER = "#E7E5EE";
 
-const Header = () => {
+interface HeaderProps {
+  onMenuClick: () => void;
+}
+
+const Header = ({ onMenuClick }: HeaderProps) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -74,14 +78,16 @@ const Header = () => {
           <Tooltip title="Menu">
             <IconButton
               size="small"
+              onClick={onMenuClick}
               sx={{
                 width: { xs: 36, sm: 40 },
                 height: { xs: 36, sm: 40 },
                 color: TEXT_SECONDARY,
                 borderRadius: 2,
                 flexShrink: 0,
-                transition: "background-color 150ms ease",
-                "&:hover": { bgcolor: "#F7F6F9" },
+                "&:hover": {
+                  bgcolor: "#F7F6F9",
+                },
               }}
             >
               <MenuRoundedIcon />
@@ -148,21 +154,6 @@ const Header = () => {
 
         {/* RIGHT */}
         <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1.5 }, flexShrink: 0 }}>
-          <Tooltip title="Search">
-            <IconButton
-              sx={{
-                display: { xs: "inline-flex", md: "none" },
-                width: 36,
-                height: 36,
-                color: TEXT_SECONDARY,
-                borderRadius: 2,
-                "&:hover": { bgcolor: "#F7F6F9" },
-              }}
-            >
-              <SearchRoundedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-
           <Tooltip title="Notifications">
             <IconButton
               sx={{
