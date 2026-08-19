@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -13,7 +13,7 @@ import EditCustomer from "../pages/Customers/EditCustomer";
 
 import AddOrder from "../pages/Orders/AddOrder";
 import OrderList from "../pages/Orders/OrderList";
-import EditOrder from "../pages/Orders/EditOrder";
+import EditOrder from "../pages/Orders/EditOrder";  
 import PaymentList from "../pages/Payments/PaymentList";
 import AddPayment from "../pages/Payments/AddPayment";
 import EditPayment from "../pages/Payments/EditPayment";
@@ -31,7 +31,10 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-
+{
+  index: true,
+  element: <Navigate to="/register" replace />,
+},
   {
     path: "/",
     element: <MainLayout />,
