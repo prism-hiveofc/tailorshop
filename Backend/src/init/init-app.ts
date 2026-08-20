@@ -7,7 +7,10 @@ import cookieParser from "cookie-parser";
 export const initApp = (app: express.Application) => {
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: [
+        "http://localhost:5173",
+        "https://tailorshop-2.onrender.com",
+      ],
       credentials: true,
     })
   );
