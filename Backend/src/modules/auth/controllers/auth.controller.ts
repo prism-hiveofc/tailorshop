@@ -49,7 +49,6 @@ export const loginController = asyncHandler(
     req: Request,
     res: Response
   ): Promise<void> => {
-
     const { error, value } =
       loginValidation.validate(req.body);
 
@@ -64,10 +63,14 @@ export const loginController = asyncHandler(
 
     const result = await loginAction(value);
 
+    const isProduction =
+      process.env.NODE_ENV === "production";
+
     res.cookie("accessToken", result.token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     successResponse(
@@ -86,11 +89,13 @@ export const logoutController = asyncHandler(
     _req: Request,
     res: Response
   ): Promise<void> => {
+    const isProduction =
+      process.env.NODE_ENV === "production";
 
     res.clearCookie("accessToken", {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
     });
 
     successResponse(
