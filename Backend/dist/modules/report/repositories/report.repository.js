@@ -5,15 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDateRangeOrders = exports.getCustomerOrderHistory = exports.getDeliveredOrders = exports.getPendingOrders = exports.getMonthlyRevenue = exports.getDailyRevenue = void 0;
 const payment_model_1 = __importDefault(require("../../payment/models/payment.model"));
-const getDailyRevenue = async () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+const getDailyRevenue = async (date) => {
+    const start = new Date(`${date}T00:00:00.000`);
+    const end = new Date(`${date}T23:59:59.999`);
     return payment_model_1.default.aggregate([
         {
             $match: {
                 isDeleted: false,
                 createdAt: {
-                    $gte: today,
+                    $gte: start,
+                    $lte: end,
                 },
             },
         },
@@ -95,11 +96,15 @@ const getCustomerOrderHistory = async (customerId) => {
 };
 exports.getCustomerOrderHistory = getCustomerOrderHistory;
 const getDateRangeOrders = async (from, to) => {
+    const startDate = new Date(from);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(to);
+    endDate.setHours(23, 59, 59, 999);
     return order_model_1.default.find({
         isDeleted: false,
         createdAt: {
-            $gte: new Date(from),
-            $lte: new Date(to),
+            $gte: startDate,
+            $lte: endDate,
         },
     })
         .populate("customerId", "name phone")

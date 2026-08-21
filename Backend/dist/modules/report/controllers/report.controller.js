@@ -5,7 +5,8 @@ const async_handler_1 = require("../../../shared/utils/async.handler");
 const success_response_1 = require("../../../shared/responses/success.response");
 const daily_revenue_action_1 = require("../actions/daily-revenue.action");
 exports.getDailyRevenueController = (0, async_handler_1.asyncHandler)(async (req, res) => {
-    const revenue = await (0, daily_revenue_action_1.getDailyRevenueAction)();
+    const date = String(req.query.date);
+    const revenue = await (0, daily_revenue_action_1.getDailyRevenueAction)(date);
     (0, success_response_1.successResponse)(res, "Daily revenue fetched successfully", revenue);
 });
 const monthly_revenue_action_1 = require("../actions/monthly-revenue.action");

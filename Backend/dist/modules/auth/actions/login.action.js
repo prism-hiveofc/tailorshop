@@ -9,7 +9,7 @@ const loginAction = async (data) => {
     const { email, password } = data;
     const user = await (0, auth_repository_1.findUserByEmail)(email);
     if (!user) {
-        throw new Error("Invalid email or password");
+        throw new app_error_1.AppError("Invalid email or password", 401);
     }
     const isPasswordValid = await (0, password_helper_1.comparePassword)(password, user.password);
     if (!isPasswordValid) {

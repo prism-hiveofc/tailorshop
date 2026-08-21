@@ -13,17 +13,19 @@ const updatePaymentAction = async (paymentId, data, userId) => {
         ...data,
         updatedBy: userId,
     });
-    const payments = await (0, payment_repository_1.getPaymentsByOrder)(payment.orderId.toString());
+    const orderId = payment.orderId._id.toString();
+    const payments = await (0, payment_repository_1.getPaymentsByOrder)(orderId);
     const totalPaid = payments.reduce((sum, payment) => sum + payment.amount, 0);
-    const order = await (0, order_repostories_1.findOrderById)(payment.orderId.toString());
+    const order = await (0, order_repostories_1.findOrderById)(orderId);
     if (!order) {
         throw new app_error_1.AppError("Order not found", 404);
     }
-    if (totalPaid > order.totalAmount) {
+    if (totalPaid >
+        order.totalAmount) {
         throw new app_error_1.AppError("Total payment cannot exceed order amount", 400);
     }
     const balanceAmount = order.totalAmount - totalPaid;
-    await (0, order_repostories_1.updateOrderBalance)(order._id.toString(), balanceAmount);
+    await (0, order_repostories_1.updateOrderBalance)(orderId, balanceAmount);
     return updatedPayment;
 };
 exports.updatePaymentAction = updatePaymentAction;

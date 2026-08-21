@@ -2,14 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_controller_1 = require("../controllers/auth.controller");
+const auth_middleware_1 = require("../../../shared/middleware/auth.middleware");
 const router = (0, express_1.Router)();
-router.get("/test", (_req, res) => {
-    res.json({
-        success: true,
-        message: "Auth Route Working",
-    });
-});
 router.post("/register", auth_controller_1.registerController);
 router.post("/login", auth_controller_1.loginController);
+router.get("/me", auth_middleware_1.authMiddleware, auth_controller_1.getProfileController);
+router.post("/logout", auth_controller_1.logoutController);
 exports.default = router;
 //# sourceMappingURL=auth.route.js.map

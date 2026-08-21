@@ -9,7 +9,7 @@ const database_1 = require("./database/database");
 const startServer = async () => {
     await (0, database_1.connectDatabase)();
     app_1.default.listen(env_1.ENV.PORT, () => {
-        console.log(` Server Running on Port ${env_1.ENV.PORT}`);
+        console.log(`Server running on port ${env_1.ENV.PORT}`);
     });
 };
 startServer();
