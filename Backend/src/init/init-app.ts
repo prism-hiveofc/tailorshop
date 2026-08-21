@@ -13,16 +13,36 @@ export const initApp = (app: express.Application) => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests without Origin (Postman, server-to-server, etc.)
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Browser requests from allowed frontend
+        if (origin && allowedOrigins.includes(origin)) {
           return callback(null, true);
         }
 
-        return callback(new Error(`CORS blocked for origin: ${origin}`));
+        // Allow Postman / server-to-server requests without Origin
+        if (!origin) {
+          return callback(null, true);
+        }
+
+        return callback(
+          new Error(`Not allowed by CORS: ${origin}`)
+        );
       },
+
       credentials: true,
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
+
+      methods: [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "OPTIONS",
+      ],
+
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+      ],
     })
   );
 
