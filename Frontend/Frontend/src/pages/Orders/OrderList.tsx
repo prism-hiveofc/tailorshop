@@ -21,7 +21,7 @@ import {
   InputAdornment,
   Tooltip,
 } from "@mui/material";
-
+import AppLoader from "../../components/common/AppLoader";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -92,25 +92,28 @@ const getStatusStyle = (status: string) =>
 const OrderList = () => {
   const navigate = useNavigate();
 
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [search, setSearch] = useState("");
+const [orders, setOrders] = useState<Order[]>([]);
+const [search, setSearch] = useState("");
+const [loading, setLoading] = useState(true); 
 
   // Replaces the native window.confirm with a styled dialog —
   // same confirm-then-delete flow, just presented consistently
   // with the rest of the app (see PaymentList).
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const loadOrders = async () => {
-    try {
-      const response = await getOrders();
+ const loadOrders = async () => {
+  try {
+    setLoading(true);
 
-      console.log("ORDERS RESPONSE:", response);
+    const response = await getOrders();
 
-      setOrders(response.data);
-    } catch (error) {
-      console.error("ORDERS ERROR:", error);
-    }
-  };
+    setOrders(response.data);
+  } catch (error) {
+    console.error("ORDERS ERROR:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadOrders();
@@ -259,7 +262,20 @@ const OrderList = () => {
       {/* =========================
           ORDERS TABLE
       ========================= */}
-
+{loading ? (
+  <AppLoader message="Loading orders..." />
+) : (
+  <TableContainer
+    component={Paper}
+    sx={{
+      borderRadius: TOKENS.radius,
+      border: "1px solid",
+      borderColor: TOKENS.hairline,
+      boxShadow: "0 1px 2px rgba(28,27,41,0.04)",
+      overflowX: "auto",
+    }}
+  >
+    <Table sx={{ minWidth: 1100 }}>
       <TableContainer
         component={Paper}
         sx={{
@@ -465,7 +481,9 @@ const OrderList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
+</Table>
+</TableContainer>
+)}
       {/* =========================
           DELETE CONFIRMATION
       ========================= */}

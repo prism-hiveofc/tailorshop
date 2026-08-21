@@ -21,7 +21,7 @@ import {
   InputAdornment,
   Tooltip,
 } from "@mui/material";
-
+import AppLoader from "../../components/common/AppLoader";  
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -64,6 +64,8 @@ const TOKENS = {
   radius: 3,
 };
 
+
+
 const getInitials = (name: string) =>
   name
     ?.trim()
@@ -78,7 +80,7 @@ const CustomerList = () => {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [search, setSearch] = useState("");
-
+const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const [snackbar, setSnackbar] = useState({
@@ -91,20 +93,24 @@ const CustomerList = () => {
       | "info",
   });
 
-  const loadCustomers = async () => {
-    try {
-      const response = await getCustomers();
-      setCustomers(response.data);
-    } catch (error: any) {
-      setSnackbar({
-        open: true,
-        message:
-          error.response?.data?.message ||
-          "Failed to load customers",
-        severity: "error",
-      });
-    }
-  };
+ const loadCustomers = async () => {
+  try {
+    setLoading(true);
+
+    const response = await getCustomers();
+    setCustomers(response.data);
+  } catch (error: any) {
+    setSnackbar({
+      open: true,
+      message:
+        error.response?.data?.message ||
+        "Failed to load customers",
+      severity: "error",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadCustomers();
@@ -261,8 +267,10 @@ const CustomerList = () => {
       {/* =========================
           CUSTOMERS TABLE
       ========================= */}
-
-      <TableContainer
+{loading ? (
+  <AppLoader message="Loading customers..." />
+) : (
+ <TableContainer
         component={Paper}
         sx={{
           borderRadius: TOKENS.radius,
@@ -465,11 +473,7 @@ const CustomerList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* =========================
-          DELETE CONFIRMATION
-      ========================= */}
-
+)}
       <Dialog
         open={Boolean(deleteId)}
         onClose={handleDeleteCancel}
